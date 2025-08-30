@@ -11,3 +11,9 @@ Nationality must either be the full name of the nation, or the 3-letter abbrevia
 **Nations Available**
 
 All FIFA member nations are available. In addition, the following, non-FIFA member countries can be used: Kiribati, Tuvalu, Micronesia, Northern Mariana Islands, Guadeloupe, Bonaire, Martinique, Greenland, Zanzibar, Reunion, Sint Maarten
+
+**Usage**
+
+Package can be found here: https://www.npmjs.com/package/fifa-name-generator
+
+and can be installed using `npm i fifa-name-generator`
