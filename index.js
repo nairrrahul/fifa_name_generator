@@ -3,9 +3,9 @@ const namePool = require("./name_pool.json");
 const doubleBarreled = require("./double_barrel.json");
 
 // generate random name based on nationality and potential second nationality
-function generateName(nationality, secondNationality = null) {
+function generateName(nationality, secNat = null) {
   var nationality = parseNationToAbbrev(nationality);
-  var secondNationality = secondNationality == null ? secondNationality : parseNationToAbbrev(secondNationality);
+  var secondNationality = secNat == null ? secNat : parseNationToAbbrev(secNat);
 
   var groups = namePool[nationality];
   var secNatUse = 1;
