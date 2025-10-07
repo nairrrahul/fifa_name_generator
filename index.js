@@ -9,7 +9,7 @@ function generateName(nationality, secNat = null) {
 
   var groups = namePool[nationality];
   var secNatUse = 1;
-  const flen = groups["first"].length;
+  var flen = groups["first"].length;
   var llen = groups["last"].length;
 
   if (secondNationality != null) {
@@ -17,7 +17,7 @@ function generateName(nationality, secNat = null) {
   }
   
   const randFirstIndex = Math.floor(Math.random() * flen);
-  const randFN = groups["first"][randFirstIndex];
+  var randFN = groups["first"][randFirstIndex];
 
   var randLN = "";
   var randBar1 = 0;
@@ -25,6 +25,16 @@ function generateName(nationality, secNat = null) {
   if (secNatUse < 0.8) {
     groups = namePool[secondNationality];
     llen = groups["last"].length;
+
+    //in addition, we want a small chance of our first name being switched
+    //to that of our second nationality
+    const reassignFN = Math.random();
+    if(reassignFN < 0.2) {
+      //groups already refers to our second nationality since we are in this block
+      flen = groups["first"].length;
+      randBar1 = Math.floor(Math.random() * flen);
+      randFN = groups["first"][randBar1];
+    }
   }
 
   while(randLN.length == 0 || randLN == randFN) {
