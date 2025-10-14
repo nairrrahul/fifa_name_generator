@@ -45,18 +45,29 @@ function generateName(nationality, secNat = null) {
 
   if(nationality in doubleBarreled) {
     var prob = Math.random();
+    let doubBarSurname = "";
+    //we use a double-barrelled surname
     if(prob < doubleBarreled[nationality]) {
-      if(secNatUse < 0.8) {
+      //if a second nationality-based surname was used, we have a slight chance of having
+      //that surname also be used for the second portion of the double-barrelled surname
+      if(secNatUse == 0 && prob < 0.2) {
         var randBar2 = Math.floor(Math.random() * namePool[secondNationality]["last"].length);
-        randLN += "-" + namePool[secondNationality]["last"][randBar2];
+        doubBarSurname = namePool[secondNationality]["last"][randBar2];
       }
+      //else we use the second part from the primary surname
       else {
         var randBar2 = Math.floor(Math.random() * llen);
         if(randBar2 == randBar1) {
           randBar2 = (randBar2 + 1) % llen;
         }
-        randLN += "-" + groups["last"][randBar2];
+        doubBarSurname =  namePool[nationality]["last"][randBar2];
       }
+
+      //now that we have the double-barrelled portion, we have a 50/50 chance of swapping
+      //the names around
+      prob = Math.random();
+      randLN = prob > 0.5 ? randLN + "-" + doubBarSurname : doubBarSurname + "-" + randLN;
+
     }
   }
 
