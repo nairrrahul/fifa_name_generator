@@ -1,29 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 const mappings = require("./mappings.json");
 const doubleBarreled = require("./double_barrel.json");
-
-function parseCSVToMap(csvPath) {
-  const raw = fs.readFileSync(csvPath, 'utf8');
-  const lines = raw.split(/\r?\n/).filter(Boolean);
-  const map = {};
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    const idx = line.indexOf(',');
-    if (idx === -1) continue;
-    const code = line.slice(0, idx);
-    let name = line.slice(idx + 1).trim();
-    if (name.startsWith('"') && name.endsWith('"')) {
-      name = name.slice(1, -1).replace(/""/g, '"');
-    }
-    if (!map[code]) map[code] = [];
-    map[code].push(name);
-  }
-  return map;
-}
-
-const firstMap = parseCSVToMap(path.join(__dirname, 'first_names.csv'));
-const lastMap = parseCSVToMap(path.join(__dirname, 'last_names.csv'));
+const firstMap = require("./first_names.json");
+const lastMap = require("./last_names.json");
 
 const namePool = {};
 for (const code of Array.from(new Set([...Object.keys(firstMap), ...Object.keys(lastMap)]))) {
