@@ -12,7 +12,7 @@ for (const code of Array.from(new Set([...Object.keys(firstMap), ...Object.keys(
 }
 
 // generate random name based on nationality and potential second nationality
-function generateName(nationality, secNat = null) {
+function generateNameSplit(nationality, secNat = null) {
   var nationality = parseNationToAbbrev(nationality);
   var secondNationality = secNat == null ? secNat : parseNationToAbbrev(secNat);
 
@@ -80,7 +80,12 @@ function generateName(nationality, secNat = null) {
     }
   }
 
-  return randFN + " " + randLN;
+  return {firstName: randFN, lastName: randLN};
+}
+
+function generateName(nationality, secNat = null) {
+  const result = generateNameSplit(nationality, secNat);
+  return result.firstName + " " + result.lastName;
 }
 
 function generateNamesFromList(nationalities) {
@@ -89,6 +94,18 @@ function generateNamesFromList(nationalities) {
       return generateName(nationValue[0], nationValue[1]);
     } else if (typeof nationValue == 'string') {
       return generateName(nationValue);
+    } else {
+      throw new Error(`Invalid Nationality List Format with ${nationValue}`);
+    }
+  });
+}
+
+function generateSplitNamesFromList(nationalities) {
+  return nationalities.map(nationValue => {
+    if(Array.isArray(nationValue) && nationValue.length == 2) {
+      return generateNameSplit(nationValue[0], nationValue[1]);
+    } else if (typeof nationValue == 'string') {
+      return generateNameSplit(nationValue);
     } else {
       throw new Error(`Invalid Nationality List Format with ${nationValue}`);
     }
@@ -107,5 +124,7 @@ function parseNationToAbbrev(nation) {
 
 module.exports = {
   generateName,
-  generateNamesFromList
+  generateNameSplit,
+  generateNamesFromList,
+  generateSplitNamesFromList
 };
